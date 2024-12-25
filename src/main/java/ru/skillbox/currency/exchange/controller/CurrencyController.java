@@ -1,10 +1,14 @@
 package ru.skillbox.currency.exchange.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
+import ru.skillbox.currency.exchange.dto.CurrencyShortDto;
 import ru.skillbox.currency.exchange.service.CurrencyService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +24,12 @@ public class CurrencyController {
     @GetMapping(value = "/convert")
     ResponseEntity<Double> convertValue(@RequestParam("value") Long value, @RequestParam("numCode") Long numCode) {
         return ResponseEntity.ok(service.convertValue(value, numCode));
+    }
+
+    @GetMapping("/short")
+    ResponseEntity<?> getAllCurrenciesShort(){
+        return service.getAllCurrenciesShort().isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(service.getAllCurrenciesShort(), HttpStatus.OK);
     }
 
     @PostMapping("/create")

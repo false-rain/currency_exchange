@@ -1,7 +1,12 @@
 server:
   port: 8080
 
+data:
+  url: http://www.cbr.ru/scripts/XML_daily.asp
+  interval: P1D
+
 spring:
+
   liquibase:
     enabled: true
     drop-first: true
@@ -13,11 +18,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         show_sql: true
         hbm2ddl:
-          auto: none
-
+          auto: create-drop
